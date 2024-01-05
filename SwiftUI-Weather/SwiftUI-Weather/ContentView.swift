@@ -11,6 +11,10 @@
  https://www.youtube.com/watch?v=b1oC7sLIgpI
  - timestamp: 46:50
  - timestamp: 1:07:18
+ 
+ TODO
+ - use weather api
+ - dynamically show weekdays & weekend using data structure like array
  */
 
 import SwiftUI
