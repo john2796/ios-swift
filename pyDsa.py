@@ -115,7 +115,94 @@ class Solution:
         return res
 
 
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        # return the maximum amount of water a container can store
+        # [1,8,6,2,5,4,8,3,7] , 7 * 7 = 49
+        # if left is less than right the water will overflow
+        l, r = 0, len(height) - 1
+        res = 0
+
+        while l < r:
+            area = min(height[r], height[l]) * (r - l)
+            res = max(res, area)
+            if height[l] < height[r]:
+                l += 1
+            elif height[r] <= height[l]:
+                r -= 1
+        return res
+
+
 # ----------------- Sliding Window -----------------
+"""
+Input: prices = [7,1,5,3,6,4]
+profit = buy low on day one sell high future day
+buy = 1, sell =6 , profit = 5
+
+Output: 5
+"""
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        # return the maximum profit you can achieve
+        res = 0
+        lowest = prices[0]
+
+        for price in prices:
+            if price < lowest:
+                lowest = price
+            res = max(res, price - lowest)
+        return res
+
+
+"""
+ find the length of the longest substring without repeating characters.
+ sliding window + hashset
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+"""
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        hashset = set()
+        l = 0
+        res = 0
+
+        for r in range(len(s)):
+            while s[r] in hashset:
+                hashset.remove(s[l])
+                l += 1
+            hashset.add(s[r])
+            res = max(res, r - l + 1)
+        return res
+
+
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        # change character to uppercase k times, i wanna know the longest substring containing same letter
+        # "ABAB", k=2 , output=4 , we change A or B k times(2) we get 4 substring
+
+        # sliding window +  char count
+        l, maxf = 0, 0
+        count = {}
+
+        for r in range(len(s)):
+            # expand window + calc maxf
+            count[s[r]] = 1 + count.get(s[r], 0)
+            maxf = max(maxf, count[s[r]])
+
+            # shrink window
+            if (r - l + 1) - maxf > k:
+                count[s[l]] -= 1
+                l += 1
+        return r - l + 1  # how did i get access to r from here??
+
+
 # ----------------- Stack -----------------
 # ----------------- Binary Search -----------------
 # ----------------- Linked List -----------------
