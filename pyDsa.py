@@ -1,3 +1,4 @@
+# ----------------- Arrays & Hashing -----------------
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         count = {}  # {1:3, 2:2, 3:1}
@@ -57,6 +58,7 @@ class Solution:
         return longest
 
 
+# ----------------- Two Pointers -----------------
 """
 Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
 
@@ -111,3 +113,21 @@ class Solution:
                     ):  # move left pointer when l and prev are the same and ensure it doesn't go out of bounds
                         l += 1
         return res
+
+
+# ----------------- Sliding Window -----------------
+# ----------------- Stack -----------------
+# ----------------- Binary Search -----------------
+# ----------------- Linked List -----------------
+# ----------------- Trees -----------------
+# ----------------- Tries -----------------
+# ----------------- Heap/Priority Queue -----------------
+# ----------------- Backtracking -----------------
+# ----------------- Graphs -----------------
+# ----------------- Advanced Graphs -----------------
+# ----------------- 1-D Dynamic Programming -----------------
+# ----------------- 2-D Dynamic Programming -----------------
+# ----------------- Greedy -----------------
+# ----------------- Intervals -----------------
+# ----------------- Math & Geometry -----------------
+# ----------------- Bit Manipulation -----------------
