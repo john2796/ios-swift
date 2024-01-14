@@ -248,6 +248,27 @@ class Solution:
         return s[l : r + 1] if resLen != float("infinity") else ""
 
 
+# store pair in hashKey, use stack to check if matches hashKey
+# Stack follows LIFO while Queue follows FIFO data structure type.
+class Solution:
+    def isValid(self, s: str) -> bool:
+        # [( )]
+        hashKey = {
+            ")" : "(",
+            "}" : "{",
+            "]" : "["
+        }
+        stack = []
+        for c in s:
+            if c not in hashKey:
+                stack.append(c)
+                continue
+            if not stack or hashKey[c] != stack[-1]:
+                return False
+            stack.pop()
+        return not stack
+
+
 # ----------------- Stack -----------------
 # ----------------- Binary Search -----------------
 # ----------------- Linked List -----------------
