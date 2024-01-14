@@ -248,16 +248,15 @@ class Solution:
         return s[l : r + 1] if resLen != float("infinity") else ""
 
 
+# ----------------- Stack -----------------
+
+
 # store pair in hashKey, use stack to check if matches hashKey
 # Stack follows LIFO while Queue follows FIFO data structure type.
 class Solution:
     def isValid(self, s: str) -> bool:
         # [( )]
-        hashKey = {
-            ")" : "(",
-            "}" : "{",
-            "]" : "["
-        }
+        hashKey = {")": "(", "}": "{", "]": "["}
         stack = []
         for c in s:
             if c not in hashKey:
@@ -269,8 +268,72 @@ class Solution:
         return not stack
 
 
-# ----------------- Stack -----------------
 # ----------------- Binary Search -----------------
+"""
+Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+
+Example 1:
+
+Input: nums = [3,4,5,1,2]
+Output: 1
+Explanation: The original array was [1,2,3,4,5] rotated 3 times.
+"""
+
+
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        start, end = 0, len(nums) - 1
+        curr_min = float("inf")
+
+        while start < end:
+            mid = start + (end - start) // 2  # pivot
+            curr_min = min(curr_min, nums[mid])  # store current min
+
+            # decide where to place indices
+            # right has the min
+            if nums[mid] > nums[end]:
+                start = mid + 1
+            # left has the min
+            else:
+                end = mid - 1
+        return min(curr_min, nums[start])
+
+
+"""
+Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+
+Example 1:
+
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+
+"""
+
+
+# check wether to do binary search on left sorted or right sorted move pointer based on pivot middle less than or greater than
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums) - 1
+
+        while l <= r:
+            mid = (l + r) // 2
+            if target == nums[mid]:
+                return mid
+            # left sorted position
+            if nums[l] <= nums[mid]:
+                if target > nums[mid] or target < nums[l]:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+            # right sorted position
+            else:
+                if target < nums[mid] or target > nums[r]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+        return -1
+
+
 # ----------------- Linked List -----------------
 # ----------------- Trees -----------------
 # ----------------- Tries -----------------
