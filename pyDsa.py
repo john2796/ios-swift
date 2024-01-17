@@ -536,6 +536,7 @@ class Solution:
         else:
             return False
 
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -544,25 +545,22 @@ class Solution:
 #         self.right = right
 class Solution:
     def isSubtree(self, s: Optional[TreeNode], t: Optional[TreeNode]) -> bool:
-        # first find the head in root tree
         if not t:
             return True
         if not s:
             return False
         if self.sameTree(s, t):
             return True
-        # compare subroot to root head , left or right
-        return self.isSubtree(s.left, t) or self.isSubTree(s.right, t)
-    
+        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
 
-    # reuse sameTree function
     def sameTree(self, s, t):
         if not s and not t:
             return True
         if s and t and s.val == t.val:
-            return self.sameTree(s.left, t.left) or self.sameTree(s.right, t.right)
-        else: 
-            return False
+            return self.sameTree(s.left, t.left) and self.sameTree(s.right, t.right)
+        return False
+
+
 # ----------------- Tries -----------------
 # ----------------- Heap/Priority Queue -----------------
 # ----------------- Backtracking -----------------
