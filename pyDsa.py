@@ -501,6 +501,7 @@ class Solution:
                 stack.append([node.right, depth + 1])
         return res
 
+
 # Iterative BFS
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
@@ -518,6 +519,50 @@ class Solution:
                     q.append(node.right)
             level += 1
         return level
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+        if p and q and p.val == q.val:
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        else:
+            return False
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSubtree(self, s: Optional[TreeNode], t: Optional[TreeNode]) -> bool:
+        # first find the head in root tree
+        if not t:
+            return True
+        if not s:
+            return False
+        if self.sameTree(s, t):
+            return True
+        # compare subroot to root head , left or right
+        return self.isSubtree(s.left, t) or self.isSubTree(s.right, t)
+    
+
+    # reuse sameTree function
+    def sameTree(self, s, t):
+        if not s and not t:
+            return True
+        if s and t and s.val == t.val:
+            return self.sameTree(s.left, t.left) or self.sameTree(s.right, t.right)
+        else: 
+            return False
 # ----------------- Tries -----------------
 # ----------------- Heap/Priority Queue -----------------
 # ----------------- Backtracking -----------------
