@@ -611,6 +611,38 @@ class Solution:
         return res
 
 
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        # left is less than root
+        # right is greater than root
+        def valid(node, left, right):
+            if not node:
+                return True
+            if not (left < node.val < right):
+                return False
+            return valid(node.left, left, node.val) and valid(
+                node.right, node.val, right
+            )
+
+        return valid(root, float("-inf"), float("inf"))
+
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        # dfs iterative
+        stack = []
+        curr = root
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+            curr = stack.pop()
+            k -= 1
+            if k == 0:
+                return curr.val
+            curr = curr.right
+
+
 # ----------------- Tries -----------------
 # ----------------- Heap/Priority Queue -----------------
 # ----------------- Backtracking -----------------
