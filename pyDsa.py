@@ -772,7 +772,55 @@ class Codec:
 # ser = Codec()
 # deser = Codec()
 # ans = deser.deserialize(ser.serialize(root))
+
+
 # ----------------- Tries -----------------
+class TrieNode:
+    def __init__(self):
+        self.children = [None] * 26
+        self.end = False
+
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        # insert a word into trie
+        curr = self.root
+        for c in word:
+            # index in alphabet
+            i = ord(c) - ord("a")
+            # check if curr children is None add TrieNode
+            if curr.children[i] == None:
+                curr.children[i] = TrieNode()
+            curr = curr.children[i]
+        curr.end = True  # mark last character
+
+    def search(self, word: str) -> bool:
+        curr = self.root
+        for c in word:
+            i = ord(c) - ord("a")
+            if curr.children[i] == None:
+                return False
+            curr = curr.children[i]
+        return curr.end
+
+    def startsWith(self, prefix: str) -> bool:
+        curr = self.root
+        for p in prefix:
+            i = ord(p) - ord("a")
+            if curr.children[i] == None:
+                return False
+            curr = curr.children[i]
+        return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
 # ----------------- Heap/Priority Queue -----------------
 # ----------------- Backtracking -----------------
 # ----------------- Graphs -----------------
