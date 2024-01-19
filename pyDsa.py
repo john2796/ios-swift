@@ -904,6 +904,81 @@ class WordDictionary:
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
+
+
+"""
+212. Word Search II
+Given an m x n board of characters and a list of strings words, return all words on the board.
+
+Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+
+Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
+Output: ["eat","oath"]
+"""
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.refs = 0
+        self.isWord = False
+
+    def addWord(self, word):
+        cur = self
+        self.refs += 1
+        for c in word:
+            if c not in cur.children:
+                cur.children[c] = TrieNode()
+            cur = cur.children[c]
+            cur.refs += 1
+        cur.isWord = True
+
+    def removeWord(self, word):
+        cur = self
+        self.refs -= 1
+        for c in word:
+            if c in cur.children:
+                cur = cur.children[c]
+                cur.refs -= 1
+
+
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        root = TrieNode()
+        for w in words:
+            root.addWord(w)
+
+        ROW, COL = len(board), len(board[0])
+        res, visit = set(), set()
+
+        def dfs(r, c, node, word):
+            if (
+                r not in range(ROW)
+                or c not in range(COL)
+                or board[r][c] not in node.children
+                or node.children[board[r][c]].refs < 1
+                or ((r, c)) in visit
+            ):
+                return
+            visit.add((r, c))
+            node = node.children[board[r][c]]
+            word += board[r][c]
+            if node.isWord:
+                node.isWord = False
+                res.add(word)
+                root.removeWord(word)
+            dfs(r + 1, c, node, word)
+            dfs(r - 1, c, node, word)
+            dfs(r, c + 1, node, word)
+            dfs(r, c - 1, node, word)
+            visit.remove((r, c))
+
+        for r in range(ROW):
+            for c in range(COL):
+                dfs(r, c, root, "")
+        return list(res)
+
+
 # ----------------- Heap/Priority Queue -----------------
 # ----------------- Backtracking -----------------
 # ----------------- Graphs -----------------
