@@ -1176,7 +1176,9 @@ class Solution:
             for c in range(cols):
                 islands_connected += dfs(r, c, visit)
         return islands_connected
-# q2 
+
+
+# q2
 
 """
 Given a reference of a node in a connected undirected graph.
@@ -1193,22 +1195,76 @@ class Node:
 """
 
 from typing import Optional
+
+
 class Solution:
-    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
         oldToNew = {}
-        
+
         def dfs(node):
             # check if node is in old dict
             if node in oldToNew:
                 return oldToNew[node]
-            copy = Node(node.val) # make a copy 
-            oldToNew[node] = copy # add copy to old dict
+            copy = Node(node.val)  # make a copy
+            oldToNew[node] = copy  # add copy to old dict
 
-            for nei in node.neighbors: # check neighbor
-                copy.neighbors.append(dfs(nei)) # go through copy neighbors append dfs(nei)
-            return copy 
+            for nei in node.neighbors:  # check neighbor
+                copy.neighbors.append(
+                    dfs(nei)
+                )  # go through copy neighbors append dfs(nei)
+            return copy
+
         return dfs(node) if node else None
 
+
+"""
+Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
+"""
+
+
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        ROWS, COLS = len(heights), len(heights[0])
+        pac, atl = set(), set()
+
+        # Normal graph DFS function
+        def dfs(r, c, visit, prevHeight):
+            # Base cases for stopping the DFS recursion
+            if (
+                (r, c) in visit
+                or r < 0
+                or c < 0
+                or r == ROWS
+                or c == COLS
+                or heights[r][c] < prevHeight
+            ):
+                return
+            # Mark the current cell as visited
+            visit.add((r, c))
+            # Recursively explore neighboring cells
+            dfs(r + 1, c, visit, heights[r][c])
+            dfs(r - 1, c, visit, heights[r][c])
+            dfs(r, c + 1, visit, heights[r][c])
+            dfs(r, c - 1, visit, heights[r][c])
+
+        # Traverse the top and bottom rows to mark cells reachable from the Pacific and Atlantic oceans
+        for c in range(COLS):
+            dfs(0, c, pac, heights[0][c])  # Column in the Pacific
+            dfs(ROWS - 1, c, atl, heights[ROWS - 1][c])  # Column in the Atlantic
+
+        # Traverse the leftmost and rightmost columns to mark cells reachable from the Pacific and Atlantic oceans
+        for r in range(ROWS):
+            dfs(r, 0, pac, heights[r][0])  # Row in the Pacific
+            dfs(r, COLS - 1, atl, heights[r][COLS - 1])  # Row in the Atlantic
+
+        # Find the intersection of cells reachable from both oceans
+        res = []
+        for r in range(ROWS):
+            for c in range(COLS):
+                if (r, c) in pac and (r, c) in atl:
+                    res.append([r, c])
+
+        return res
 
 
 # ----------------- Advanced Graphs -----------------
