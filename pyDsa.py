@@ -1176,6 +1176,39 @@ class Solution:
             for c in range(cols):
                 islands_connected += dfs(r, c, visit)
         return islands_connected
+# q2 
+
+"""
+Given a reference of a node in a connected undirected graph.
+
+Return a deep copy (clone) of the graph.
+"""
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        oldToNew = {}
+        
+        def dfs(node):
+            # check if node is in old dict
+            if node in oldToNew:
+                return oldToNew[node]
+            copy = Node(node.val) # make a copy 
+            oldToNew[node] = copy # add copy to old dict
+
+            for nei in node.neighbors: # check neighbor
+                copy.neighbors.append(dfs(nei)) # go through copy neighbors append dfs(nei)
+            return copy 
+        return dfs(node) if node else None
+
 
 
 # ----------------- Advanced Graphs -----------------
