@@ -1220,11 +1220,12 @@ class Solution:
 """
 Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
 
+
 PacificAtlantic Approach:
 - Do normal dfs: check currentHeight is greater than prevHeight
 - Traverse the top and bottom rows to mamrk cells reachable from the Pacific and atlantic oceans
 - Traverse the leftmost and rightmost columns to mark cells reachable from the Pacific and Atlantic oceans
-- Find the intersection of cells reachable from both oceans
+- Find the intersection of cells reachable from both oceans.
 """
 
 
