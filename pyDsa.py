@@ -1123,6 +1123,61 @@ class Solution:
 
 
 # ----------------- Graphs -----------------
+"""
+Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+
+Example 1:
+
+Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+Example 2:
+
+Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+
+"""
+
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        rows, cols = len(grid), len(grid[0])
+        visit = set()
+
+        def dfs(r, c, visited):
+            if (
+                r not in range(rows)
+                or c not in range(cols)
+                or (r, c) in visited
+                or grid[r][c] == "0"
+            ):
+                return 0
+
+            visited.add((r, c))
+            # check 4 direction
+            dfs(r + 1, c, visited)
+            dfs(r - 1, c, visited)
+            dfs(r, c + 1, visited)
+            dfs(r, c - 1, visited)
+
+            return 1
+
+        islands_connected = 0
+        for r in range(rows):
+            for c in range(cols):
+                islands_connected += dfs(r, c, visit)
+        return islands_connected
+
+
 # ----------------- Advanced Graphs -----------------
 # ----------------- 1-D Dynamic Programming -----------------
 # ----------------- 2-D Dynamic Programming -----------------
