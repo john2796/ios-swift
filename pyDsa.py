@@ -1410,6 +1410,41 @@ class Solution:
         # Return the maximum amount that can be robbed after iterating throughb all houses
         return rob2
 
+
+"""
+Longest Palindromic Substring
+Given a string s, return the longest palindromic substring in s.
+"""
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        # Initialize variables to store the result and its length
+        res = ""
+        resLen = 0
+        
+        # Iterate through each character in the string
+        for i in range(len(s)):
+            # Odd length palindrome
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                # check if the current palindrome is longer than the current result
+                if (r - l + 1) > resLen:
+                    res = s[l : r + 1]
+                    resLen = r - l + 1
+                # Expand the palindrome by moving the pointers outward
+                l -= 1
+                r += 1
+            # Even length palindrome
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    res = s[l : r + 1]
+                    resLen = r - l + 1
+                # Expand the palindrome by moving the pointers outward
+                l -= 1
+                r += 1
+        # Return the longest palindrome found
+        return res
+        
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
 # ----------------- Intervals -----------------
