@@ -1277,11 +1277,47 @@ class Solution:
 207. Course Schedule
 Approach:
 - convert prerequisites to adjacency list
-- DFS(crs) -> check if in visiting -> if preMap crs is done -> add visiting crs -> check neighbors of cours -> remove visited crs -> return True
+- DFS(crs) -> check if crs in visiting -> if preMap crs is done -> add visiting crs -> check neighbors of cours -> remove visited crs -> return True
 - iterate through number of courses if not dfs return False
 - finally return True
 """
+"""
+{
+    0: 1
+    1: 0
+}
+"""
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # convert prerequisites to adjacency list
+        preMap = {i: [] for i in range(numCourses)} # {0: [], 1:[] }
+        visiting = set()
 
+        for crs, pre in prerequisites: # {0: [], 1: [0]}
+            preMap[crs].append(pre)
+       
+        # DFS(crs) -> check if crs in visiting -> if preMap crs is done -> add visiting crs -> check neighbors of course -> remove visited crs -> return True
+        def dfs(crs):
+            if crs in visiting:
+                return False 
+            if preMap[crs] == []:
+                return True
+            visiting.add(crs)
+
+            for pre in preMap[crs]:
+                if not dfs(pre):
+                    return False
+
+            visiting.remove(crs)
+            preMap[crs] = []
+            return True
+
+        # Iterate through number of courses if not dfs return False
+        for crs in range(numCourses):
+            if not dfs(crs):
+                return False
+        # finally return True
+        return True
 # ----------------- Advanced Graphs -----------------
 # ----------------- 1-D Dynamic Programming -----------------
 # ----------------- 2-D Dynamic Programming -----------------
