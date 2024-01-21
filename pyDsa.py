@@ -1273,6 +1273,14 @@ class Solution:
 
         return res
 
+"""
+207. Course Schedule
+Approach:
+- convert prerequisites to adjacency list
+- DFS(crs) -> check if in visiting -> if preMap crs is done -> add visiting crs -> check neighbors of cours -> remove visited crs -> return True
+- iterate through number of courses if not dfs return False
+- finally return True
+"""
 
 # ----------------- Advanced Graphs -----------------
 # ----------------- 1-D Dynamic Programming -----------------
