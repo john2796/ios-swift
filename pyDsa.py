@@ -1356,6 +1356,27 @@ class Solution:
         # - Return the total number of distinct ways to climb the staircase with n steps
         return n2
 
+
+
+# 198. House Robber
+# return the maximum amount of money you can rob tonight without alerting the police.
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        # Initialize variables to track the maximum amount robbed for two consecutive houses
+        rob1, rob2 = 0, 0
+
+        # Iterate through the list of houses values
+        for n in nums:
+            # Calculate the maximum amount that can be robbed for the current house
+            # It is the maximum of the sum of the current house value and the amount robbed two houses ago (rob1), 
+            # and the amount robbed in the previous house (rob2)
+            temp = max(n + rob1, rob2)
+            # update rob1 and rob2 for the next iteration
+            rob1 = rob2
+            rob2 = temp
+
+        # Return the maximum amount that can be robbed after iterating through all houses
+        return rob2
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
 # ----------------- Intervals -----------------
