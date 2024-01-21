@@ -1319,7 +1319,43 @@ class Solution:
         # finally return True
         return True
 # ----------------- Advanced Graphs -----------------
+    # check 150 or neetcode all
+
 # ----------------- 1-D Dynamic Programming -----------------
+"""
+Climbing Stairs
+You are climbing a staircase. It takes n steps to reach the top.
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+There are two ways to climb to the top
+1. 1 step + 1 step
+2. 2 steps
+Approach:
+- Base cases: If if the number of steps is 1,2, or 3 return respective value
+- initialize variables for the number of distinct ways to climb stairs with 2 and 3 steps
+- Iterate from 4 to n (inclusive) to calculate distinct ways for each step count
+    - caclculate the current distinct ways by adding the values for n1 and n2
+    - update n1 and n2 for the next iteration
+- Return the total number of distinct ways to climb the staircase with n steps
+"""
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        # - Base cases: If the number of steps is 1,2, or 3 return respective value
+        if n <= 3:
+            return n
+        
+        # - initialize variables for the number of distinct ways to climb stairs with 2 and 3 steps
+        n1, n2 = 2, 3
+        # - Iterate from 4 to n (inclusive) to calculate distinct ways for each step count
+        for i in range(4, n + 1):
+            # caclculate the current distinct ways by adding the values for n1 and n2
+            temp = n1 + n2
+            # update n1 and n2 for the next iteration
+            n1 = n2
+            n2 = temp
+        # - Return the total number of distinct ways to climb the staircase with n steps
+        return n2
+
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
 # ----------------- Intervals -----------------
