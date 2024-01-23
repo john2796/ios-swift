@@ -1539,6 +1539,28 @@ class Solution:
                 dp[i] += dp[i + 2]
         return dp[0]
         
+
+"""
+Coin change,
+The dp array is used to store the minimum number of coins needed to make change for each amount from 0 to the target amount. The nested loops iterate through each amount and each coin denomination, updating the dp array based on the minimum number of coins needed. The final result is dp[amount], or -1 if no valid combination was foun.
+"""
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        # Initialize a DP array with values set to (amount + 1)
+        dp = [amount + 1] * (amount + 1)
+        # There is one way to make change for amount 0, which is by not selecting any coin
+        dp[0] = 0
+
+        # Iterate through each amount from 1 to the target amount
+        for a in range(1, amount + 1):
+            # Iterate through each coin denomination
+            for c in coins:
+                # check if the current coin denomination cann contribute to making change for the current amount
+                if a - c >= 0:
+                    # Update the minimum number of coins needed to make change for the current amount
+                    dp[a] = min(dp[a], 1 + dp[a - c])
+        # if dp[amount] is still (amount + 1), it means no valid combination was found
+        return dp[amount] if dp[amount] != amount + 1 else - 1
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
 # ----------------- Intervals -----------------
@@ -1549,4 +1571,5 @@ class Solution:
 """
 ChatGPT code explanation prompt:
 - add inline code explaining this code
+- Here's the code with inline comments to explain each section:
 """
