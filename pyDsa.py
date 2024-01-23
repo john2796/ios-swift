@@ -1444,6 +1444,78 @@ class Solution:
                 r += 1
         # Return the longest palindrome found
         return res
+
+
+"""
+Palindromic Substrings
+Given a string s, return the number of palindromic substrings in it.
+
+A string is a palindrome when it reads the same backward as forward.
+
+A substring is a contiguous sequence of characters within the string.
+Example 1:
+
+Input: s = "abc"
+Output: 3
+Explanation: Three palindromic strings: "a", "b", "c".
+Example 2:
+
+Input: s = "aaa"
+Output: 6
+Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+"""
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        # Initialize a variable to store the count of palindromic substrings
+        res = 0
+
+        # Iterate through each character in the string
+        for i in range(len(s)):
+            # Count palindromic substrings with odd length, centered at i
+            res += self.countPali(s, i, i)
+            # Count palindromic substrings with even length, centered between i and i+1
+            res += self.countPali(s, i, i + 1)
+        # Return the total count of palindromic substrings
+        return res
+    def countPali(self, s, l, r):
+        # Initialize a variable to store the count of palindromic substrings
+        res = 0
+        # Expand the palindrome by moving the pointers outward
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            res += 1
+            l -= 1
+            r += 1
+        # Return the count of palindromic substrings
+        return res    
+    
+
+"""
+Decode Ways
+Given a string s containing only digits, return the number of ways to decode it
+"""
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        # Memoization (Top-Down Approach)
+        dp = {len(s): 1} # Base case: 1 way to decode an empty string
+
+        def dfs(i):
+            if i in dp:
+                return dp[i]
+            
+            # If the current digit is '0', it cannot be decoded alone
+            if s[i] == "0":
+                return 0
+            
+            # Try decoding the current digit alone
+            res = dfs(i + 1)
+
+            # Try decoding the current digit and the next digit together if valid
+            if i + 1 < len(s) and (s[i] == "1" or (s[i] == "2" and s[i + 1] in "0123456")):
+                res += dfs(i + 2)
+            
+            dp[i] = res
+            return res
+        return dfs(0)
         
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
