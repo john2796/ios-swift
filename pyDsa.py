@@ -1516,6 +1516,28 @@ class Solution:
             dp[i] = res
             return res
         return dfs(0)
+
+
+"""
+Decode Ways 
+# Dynamic Programming (Bottom-Up Approach)
+
+The code explores all possible ways to decode the given string and uses either memoization or dp to efficiently compute the number of ways. The 'dfs' function is a recursive function used for the memoizaation approach, and the bottom-up approach uses a loop to fill the DP table from the end of the string to the beginning.
+"""
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        dp = {len(s): 1} # Base case: 1 way to decode an empty string
+        for i in range(len(s) - 1, -1, -1):
+            # If the current digit is '0', it cannot be decoded alone
+            if s[i] == '0':
+                dp[i] = 0
+            else:
+                dp[i] = dp[i + 1] # Decoding the current digit alone
+            
+            # Try decoding the current digit and the next digit together if valid
+            if i + 1 < len(s) and (s[i] == "1" or (s[i] == "2" and s[i + 1] in "0123456")):
+                dp[i] += dp[i + 2]
+        return dp[0]
         
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
