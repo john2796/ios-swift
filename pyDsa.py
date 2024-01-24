@@ -1659,7 +1659,8 @@ class Solution:
                     LIS[i] = max(LIS[i], 1 + LIS[j])
         return max(LIS)
 
-
+# ----------------- 2-D Dynamic Programming -----------------
+    
 """
 Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
 """
@@ -1709,9 +1710,94 @@ class Solution:
                     dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])
         # Return the length of the common subsequence for the entire strings
         return dp[0][0]
-
-# ----------------- 2-D Dynamic Programming -----------------
+    
 # ----------------- Greedy -----------------
+    
+"""
+Given an integer array nums, find the 
+subarray
+ with the largest sum, and return its sum.
+
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+"""
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        # Initialize the result with the first element of the array
+        res = nums[0]
+
+        # init a variable to keep track of the running sum
+        total = 0
+
+        # iterate through each element in the array
+        for n in nums:
+            # add the current element to the running sum
+            total += n
+
+            # update the result with the maximum of the current and the running sum
+            res = max(res, total)
+
+            # if the running sum becomes negative, reset it to 0
+            if total < 0:
+                total = 0
+        # return the final result, which respresent the maximum subarray sum
+        return res
+
+"""
+Return true if you can reach the last index, or false otherwise.
+
+Input: nums = [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+Example 2:
+
+Input: nums = [3,2,1,0,4]
+Output: false
+Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+
+"""
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        # init the goal to the las index of the array
+        goal = len(nums) - 1
+
+        # iterate through the array in reverse order
+        for i in range(len(nums) - 2, -1, -1):
+            # if the current position can reach or go beyond the current goal, update the goal
+            if i + nums[i] >= goal:
+                goal = i
+        # return whether the gooal is reached (i.e., whether the first position can be reached from the last)
+        return goal == 0
+
+"""
+Return true if you can reach the last index, or false otherwise.
+
+Input: nums = [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+Example 2:
+
+Input: nums = [3,2,1,0,4]
+Output: false
+Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+
+"""
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        # init the goal to the las index of the array
+        goal = len(nums) - 1
+
+        # iterate through the array in reverse order
+        for i in range(len(nums) - 2, -1, -1):
+            # if the current position can reach or go beyond the current goal, update the goal
+            if i + nums[i] >= goal:
+                goal = i
+        # return whether the gooal is reached (i.e., whether the first position can be reached from the last)
+        return goal == 0
+    
 # ----------------- Intervals -----------------
 # ----------------- Math & Geometry -----------------
 # ----------------- Bit Manipulation -----------------
