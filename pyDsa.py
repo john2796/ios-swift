@@ -1771,33 +1771,6 @@ class Solution:
         # return whether the gooal is reached (i.e., whether the first position can be reached from the last)
         return goal == 0
 
-"""
-Return true if you can reach the last index, or false otherwise.
-
-Input: nums = [2,3,1,1,4]
-Output: true
-Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
-Example 2:
-
-Input: nums = [3,2,1,0,4]
-Output: false
-Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
-
-"""
-
-class Solution:
-    def canJump(self, nums: List[int]) -> bool:
-        # init the goal to the las index of the array
-        goal = len(nums) - 1
-
-        # iterate through the array in reverse order
-        for i in range(len(nums) - 2, -1, -1):
-            # if the current position can reach or go beyond the current goal, update the goal
-            if i + nums[i] >= goal:
-                goal = i
-        # return whether the gooal is reached (i.e., whether the first position can be reached from the last)
-        return goal == 0
-    
 # ----------------- Intervals -----------------
 # ----------------- Math & Geometry -----------------
 # ----------------- Bit Manipulation -----------------
