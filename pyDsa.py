@@ -1561,6 +1561,155 @@ class Solution:
                     dp[a] = min(dp[a], 1 + dp[a - c])
         # if dp[amount] is still (amount + 1), it means no valid combination was found
         return dp[amount] if dp[amount] != amount + 1 else - 1
+
+
+"""
+Maximum Product Subarray
+Given an iteger array nums, find a subarray that has the largest product, and return the product
+
+Input: nums = [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+Example 2:
+
+Input: nums = [-2,0,-1]
+Output: 0
+Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+ 
+ **
+ this code find the maximum product of a subarray within the given array nums. It uses two variables, curMin and curMax, to keep track of the current minimum and maximum product ending at the current index. The loop itreates through each number in nums, updating these variables and the overall result res accordingly. The final result is the maximum product of a subarray in the given array.
+"""
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        # Initialize variables to keep track of the maximum product, current minimum, and current maximum
+        res = nums[0]
+        curMin, curMax = 1, 1
+        # Iterate through each number in the array
+        for n in nums:
+            # Calculate the temporary product using the current maximum and the current number
+            tmp = curMax * n
+            # Update the current maximum and minimum based on the current nummber
+            curMax = max(n * curMax, n * curMin, n)
+            curMin = min(tmp, n * curMin, n)
+
+            # Update the overall result with the maximum product
+            res = max(res, curMax)
+        # Return the maximum product
+        return res
+    
+"""
+Word Break 
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+ 
+
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+
+Approach:
+- Initialize a DP array with False values
+- set the value at the end of the string to True since an empty string is a valid break
+- iterate through each index of the string in reverse order
+    - iterate through each word in the word dictionary
+        - check if the current substring matches the word, and update dp[i] accordingly
+        - if dp[i] is True, break out of the loop since it indicates a valid break
+- Return whether the entire string can be broken into valid words
+"""
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False] * (len(s) + 1)
+        dp[len(s)] = True
+
+        for i in range(len(s) - 1, -1, -1):
+            for w in wordDict:
+                if (i + len(w)) <= len(s) and s[i : i + len(w)] == w:
+                    dp[i] = dp[i + len(w)]
+                if dp[i]:
+                    break
+        return dp[0]
+    
+"""
+Longest Increasing subsequence
+
+Given an integer array nums, return the length of the longest strictly increasing subsequence
+
+Input: nums = [10,9,2,5,3,7,101,18]
+Output: 4
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+
+Approach:
+- Initialize an array to store the length of the longest increasing subsequence ending at each index
+- iterate through each index of the array in reverse order
+    - iterate through indices greater than i to compare elments
+        - if the element at index i is less than the element at index j,
+        - update the length of LIS at index i based on LIS at index j
+- return the maximum length of the LIS
+"""
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        LIS = [1] * len(nums)
+        for i in range(len(nums) - 1, -1, -1):
+            for j in range(i + 1, len(nums)):
+                if nums[i] < nums[j]:
+                    LIS[i] = max(LIS[i], 1 + LIS[j])
+        return max(LIS)
+
+
+"""
+Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+"""
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        # Initialize the first row with all 1s, as there is only one way to reach any cell in the first row
+        row = [1] * n
+
+        # Iterate through each row (excluding the first row)
+        for i in range(m - 1):
+            # Create a new row to store the updated number of unique paths
+            newRow = [1] * n
+
+            # Iterate through each column in reverse order
+            for j in range(n - 2, -1, -1):
+                # Update the number of unique paths for the current cell
+                newRow[j] = newRow[j + 1] + row[j]
+            
+            # Update the current row with the newly calculated values
+            row = newRow
+        # The result is the number of unique paths in the top-left cell after iteration
+        return row[0]
+
+
+"""
+Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.
+
+Input: text1 = "abcde", text2 = "ace" 
+Output: 3  
+Explanation: The longest common subsequence is "ace" and its length is 3.
+
+"""
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        # Initialize a 2D array dp to store the length of the common subsequence
+        dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]
+
+        # Iterate through each character in text1 in reverse order
+        for i in range(len(text1) - 1, -1, -1):
+            # Iterate through each character in text2 in reverse order
+            for j in range(len(text2) -1, -1, -1):
+                # if the character match, update the length of common subsequence
+                if text1[i] == text2[j]:
+                    dp[i][j] = 1 + dp[i + 1][j + 1 ]
+                else:
+                    # if characters do not match, take the maximum of subsequence lengths without including one character
+                    dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])
+        # Return the length of the common subsequence for the entire strings
+        return dp[0][0]
+
 # ----------------- 2-D Dynamic Programming -----------------
 # ----------------- Greedy -----------------
 # ----------------- Intervals -----------------
