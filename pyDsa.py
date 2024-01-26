@@ -1772,6 +1772,51 @@ class Solution:
         return goal == 0
 
 # ----------------- Intervals -----------------
+"""
+Insert Interval
+Return intervals after the insertion.
+
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
+
+- Initialize an empty list to store the result intervals 
+- iterate through each interval in the given list
+- if the end of the newInterval is before the start of the current interval, insert newInterval
+- Append the remaining intervals from the original list and return the result
+- If the start of newInterval is after the end of the current interval, add the current interval to the result
+- If there is an overlap, merge the intervals by updating newInterval
+- Add the final merged or newInterval to the result
+- Return the result list containing merged or inserted intervals
+"""
+class Solution:
+    def insert(
+        self, intervals: List[List[int]], newInterval: List[int]
+    ) -> List[List[int]]:
+        # Initialize an empty list to store the result intervals
+        res = []
+
+        # Iterate through each interval in the given list
+        for i in range(len(intervals)):
+            # If the end of the newInterval is before the start of the current interval, insert newInterval
+            if newInterval[1] < intervals[i][0]:
+                res.append(newInterval)
+                # Append the remaining intervals from the original list and return the result
+                return res + intervals[i:]
+            # If the start of newInterval is after the end of the current interval, add the current interval to the result
+            elif newInterval[0] > intervals[i][1]:
+                res.append(intervals[i])
+            else:
+                # If there is an overlap, merge the intervals by updating newInterval
+                newInterval = [
+                    min(newInterval[0], intervals[i][0]),
+                    max(newInterval[1], intervals[i][1]),
+                ]
+
+        # Add the final merged or newInterval to the result
+        res.append(newInterval)
+        # Return the result list containing merged or inserted intervals
+        return res
+    
 # ----------------- Math & Geometry -----------------
 # ----------------- Bit Manipulation -----------------
 
