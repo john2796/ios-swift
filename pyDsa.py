@@ -1816,7 +1816,116 @@ class Solution:
         res.append(newInterval)
         # Return the result list containing merged or inserted intervals
         return res
-    
+
+
+"""
+merges overlapping intervals in a given list. It first sorts the intervals based on their starting values. Then, it iterates through the sorted intervals, merging overlapping ones and adding non-overlapping ones to the output list. The final result is a list of merged intervals.
+"""
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        # Sort intervals based on the starting values
+        intervals.sort(key=lambda pair: pair[0])
+        
+        # Initialize the output list with the first interval
+        output = [intervals[0]]
+
+        # Iterate through each interval in the sorted list
+        for start, end in intervals:
+            # Get the end value of the last interval in the output list
+            lastEnd = output[-1][1]
+
+            # Check if there is an overlap between the current interval and the last interval in the output
+            if start <= lastEnd:
+                # Merge the intervals by updating the end value of the last interval in the output
+                output[-1][1] = max(lastEnd, end)
+            else:
+                # If no overlap, add the current interval to the output list
+                output.append([start, end])
+
+        # Return the merged or non-overlapping intervals
+        return output
+
+
+"""
+This code calculates the minimum number of intervals needed to remove (erase) to make the remaining intervals non-overlapping. It sorts the intervals based on their starting values and then iterates through them, updating the count of overlapping intervals (res) and the end value of the previous interval (prevEnd). The final result is the minimum number of intervals to be removed.
+"""
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        # Sort intervals based on the starting values
+        intervals.sort()
+
+        # Initialize a variable to store the count of overlapping intervals
+        res = 0
+
+        # Initialize a variable to keep track of the end value of the previous interval
+        prevEnd = intervals[0][1]
+
+        # Iterate through each interval starting from the second interval
+        for start, end in intervals[1:]:
+            # Check if there is no overlap between the current interval and the previous one
+            if start >= prevEnd:
+                # Update the previous end value to the end value of the current interval
+                prevEnd = end
+            else:
+                # If there is an overlap, increment the count of overlapping intervals
+                res += 1
+                # Update the previous end value to the minimum of the end values of the current and previous intervals
+                prevEnd = min(end, prevEnd)
+
+        # Return the count of overlapping intervals
+        return res
+
+
+
+"""
+checks if a person can attend all meetings without any overlap. It first sorts the intervals based on their starting values. Then, it iterates through the sorted intervals and checks if there is an overlap between consecutive intervals. If an overlap is found, the function returns False; otherwise, it returns True.
+"""
+class Solution:
+    def canAttendMeetings(self, intervals):
+        # Sort intervals based on the starting values
+        intervals.sort(key=lambda i: i[0])
+
+        # Iterate through each interval starting from the second interval
+        for i in range(1, len(intervals)):
+            # Get the previous and current intervals
+            i1 = intervals[i - 1]
+            i2 = intervals[i]
+
+            # Check if there is an overlap between the previous and current intervals
+            if i1[1] > i2[0]:
+                # If there is an overlap, the person cannot attend all meetings
+                return False
+
+        # If no overlap is found, the person can attend all meetings
+        return True
+
+
+"""
+This code calculates the minimum number of meeting rooms required to schedule all the given intervals. It uses a list of time points, each annotated with a type (start or end), sorts them, and then iterates through the sorted time points to track the count of ongoing meetings. The maximum count during the iteration represents the minimum number of meeting rooms required at any point in time.
+"""
+def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+    # Initialize a list to store time points with their corresponding types (start or end)
+    time = []
+    for start, end in intervals:
+        time.append((start, 1))  # 1 represents the start of a meeting
+        time.append((end, -1))   # -1 represents the end of a meeting
+
+    # Sort the time points first by time and then by type (start before end)
+    time.sort(key=lambda x: (x[0], x[1]))
+
+    # Initialize variables to keep track of the count of ongoing meetings and the maximum count
+    count = 0
+    max_count = 0
+
+    # Iterate through each time point
+    for t in time:
+        count += t[1]  # Increment or decrement the count based on the type (start or end)
+        max_count = max(max_count, count)  # Update the maximum count
+
+    # Return the maximum count, which represents the minimum number of meeting rooms required
+    return max_count
+
+
 # ----------------- Math & Geometry -----------------
 # ----------------- Bit Manipulation -----------------
 
